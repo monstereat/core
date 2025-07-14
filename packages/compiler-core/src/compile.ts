@@ -89,6 +89,7 @@ export function baseCompile(
   const resolvedOptions = extend({}, options, {
     prefixIdentifiers,
   })
+  // cd：parse解析：把template转成ast
   const ast = isString(source) ? baseParse(source, resolvedOptions) : source
   const [nodeTransforms, directiveTransforms] =
     getBaseTransformPreset(prefixIdentifiers)
@@ -99,7 +100,7 @@ export function baseCompile(
       options.expressionPlugins = [...(expressionPlugins || []), 'typescript']
     }
   }
-
+  // cd：transform转换：把ast转成生成代码对象（优化后的ast，加了一些生成代码方法和信息，包括codegenNode）
   transform(
     ast,
     extend({}, resolvedOptions, {
@@ -114,6 +115,6 @@ export function baseCompile(
       ),
     }),
   )
-
+  // cd：generate生成代码：把render函数转成代码
   return generate(ast, resolvedOptions)
 }
