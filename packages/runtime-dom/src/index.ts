@@ -65,6 +65,7 @@ export const hydrate = ((...args) => {
 }) as RootHydrateFunction
 
 export const createApp = ((...args) => {
+  // cd：确保渲染器初始完
   const app = ensureRenderer().createApp(...args)
 
   if (__DEV__) {
@@ -101,6 +102,7 @@ export const createApp = ((...args) => {
 
     // clear content before mounting
     container.innerHTML = ''
+    // cd：解析命名空间。进行挂载
     const proxy = mount(container, false, resolveRootNamespace(container))
     if (container instanceof Element) {
       container.removeAttribute('v-cloak')

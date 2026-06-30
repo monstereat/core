@@ -117,4 +117,5 @@ function compileToFunction(
 registerRuntimeCompiler(compileToFunction)
 
 export { compileToFunction as compile }
+// 导出runtime-dom包
 export * from '@vue/runtime-dom'

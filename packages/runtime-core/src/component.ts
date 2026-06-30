@@ -573,6 +573,7 @@ export function createComponentInstance(
     directives: null,
 
     // resolved props and emits options
+    // cd：解析组件的 props 和 emits 选项
     propsOptions: normalizePropsOptions(type, appContext),
     emitsOptions: normalizeEmitsOptions(type, appContext),
 
@@ -794,6 +795,7 @@ function setupStatefulComponent(
 
     const reset = setCurrentInstance(instance)
     pauseTracking()
+    // cd：调用 setup 函数
     const setupResult = callWithErrorHandling(
       setup,
       instance,
@@ -1104,7 +1106,7 @@ export function createSetupContext(
     }
   }
 }
-
+// cd：处理组件expose功能函数，返回组件的暴露对象
 export function getExposeProxy(instance: ComponentInternalInstance) {
   if (instance.exposed) {
     return (

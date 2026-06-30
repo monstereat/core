@@ -343,9 +343,11 @@ export function createAppAPI<HostElement>(
           if (isHydrate && hydrate) {
             hydrate(vnode as VNode<Node, Element>, rootContainer as any)
           } else {
+            // cd：执行渲染操作
             render(vnode, rootContainer, namespace)
           }
           isMounted = true
+          // cd：根据容器有_vnode
           app._container = rootContainer
           // for devtools and telemetry
           ;(rootContainer as any).__vue_app__ = app

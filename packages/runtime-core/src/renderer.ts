@@ -1247,6 +1247,7 @@ function baseCreateRenderer(
         processCommentNode(null, placeholder, container!, anchor)
       }
     } else {
+      // cd：同步组件执行组件的渲染函数
       setupRenderEffect(
         instance,
         initialVNode,
@@ -1335,6 +1336,7 @@ function baseCreateRenderer(
         }
         toggleRecurse(instance, true)
 
+        // cd：服务端渲染
         if (el && hydrateNode) {
           // vnode has adopted host node - perform hydration instead of mount.
           const hydrateSubTree = () => {
@@ -1375,6 +1377,7 @@ function baseCreateRenderer(
           if (__DEV__) {
             startMeasure(instance, `render`)
           }
+          //cd： 渲染renderComponentRoot
           const subTree = (instance.subTree = renderComponentRoot(instance))
           if (__DEV__) {
             endMeasure(instance, `render`)
@@ -1783,7 +1786,7 @@ function baseCreateRenderer(
       )
     }
   }
-
+  // cd: diff算法
   // can be all-keyed or mixed
   const patchKeyedChildren = (
     c1: VNode[],

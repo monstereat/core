@@ -116,6 +116,7 @@ export function doCompileStyle(
   if (trim) {
     plugins.push(trimPlugin())
   }
+  // cd：css样式添加前缀
   if (scoped) {
     plugins.push(scopedPlugin(longId))
   }

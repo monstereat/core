@@ -69,6 +69,7 @@ export function renderComponentRoot(
   }
 
   try {
+    // cd：状态组件执行
     if (vnode.shapeFlag & ShapeFlags.STATEFUL_COMPONENT) {
       // withProxy is a proxy with a different `has` trap only for
       // runtime-compiled render functions using `with` block.
@@ -88,6 +89,7 @@ export function renderComponentRoot(
               },
             })
           : proxyToUse
+      // cd：绑定this执行render函数
       result = normalizeVNode(
         render!.call(
           thisProxy,
@@ -101,6 +103,7 @@ export function renderComponentRoot(
       )
       fallthroughAttrs = attrs
     } else {
+      // cd：函数式组件执行
       // functional
       const render = Component as FunctionalComponent
       // in dev, mark attrs accessed if optional props (attrs === props)
