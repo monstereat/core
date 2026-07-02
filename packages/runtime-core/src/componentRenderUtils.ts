@@ -89,7 +89,7 @@ export function renderComponentRoot(
               },
             })
           : proxyToUse
-      // cd：绑定this执行render函数
+      //TODO cd：绑定this执行render函数
       result = normalizeVNode(
         render!.call(
           thisProxy,

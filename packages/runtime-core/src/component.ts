@@ -782,6 +782,7 @@ function setupStatefulComponent(
   }
   // 0. create render proxy property access cache
   instance.accessCache = Object.create(null)
+  // cd：在这里做数据响应式
   // 1. create public instance / render proxy
   instance.proxy = new Proxy(instance.ctx, PublicInstanceProxyHandlers)
   if (__DEV__) {
@@ -795,6 +796,7 @@ function setupStatefulComponent(
 
     const reset = setCurrentInstance(instance)
     pauseTracking()
+    // TODO: 执行setup函数，将普通对象变成响应式对象
     // cd：调用 setup 函数
     const setupResult = callWithErrorHandling(
       setup,

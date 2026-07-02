@@ -198,6 +198,7 @@ export type CreateAppFunction<HostElement> = (
 
 let uid = 0
 
+// cd：这里的render函数是renderer里面定义好的，不需要传入
 export function createAppAPI<HostElement>(
   render: RootRenderFunction<HostElement>,
   hydrate?: RootHydrateFunction,

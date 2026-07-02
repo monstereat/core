@@ -311,7 +311,7 @@ export function createHydrationRenderer(
 ) {
   return baseCreateRenderer(options, createHydrationFunctions)
 }
-
+// cd：上面这里是定义类型
 // overload 1: no hydration
 function baseCreateRenderer<
   HostNode = RendererNode,
@@ -631,6 +631,7 @@ function baseCreateRenderer(
     let vnodeHook: VNodeHook | undefined | null
     const { props, shapeFlag, transition, dirs } = vnode
 
+    // TODO cd： 将虚拟vnode转成真实dom
     el = vnode.el = hostCreateElement(
       vnode.type as string,
       namespace,
@@ -1200,6 +1201,7 @@ function baseCreateRenderer(
   ) => {
     // 2.x compat may pre-create the component instance before actually
     // mounting
+    // TODO cd: 1.创建component实例
     const compatMountInstance =
       __COMPAT__ && initialVNode.isCompatRoot && initialVNode.component
     const instance: ComponentInternalInstance =
@@ -1229,6 +1231,7 @@ function baseCreateRenderer(
       if (__DEV__) {
         startMeasure(instance, `init`)
       }
+      // TODO cd: 2.初始化组件（props，slots，setup，）
       setupComponent(instance)
       if (__DEV__) {
         endMeasure(instance, `init`)
@@ -1247,7 +1250,8 @@ function baseCreateRenderer(
         processCommentNode(null, placeholder, container!, anchor)
       }
     } else {
-      // cd：同步组件执行组件的渲染函数
+      // TODO cd：同步组件执行组件的渲染函数
+      // cd: 3.设置渲染effect（执行render——>patch——>mountElement）
       setupRenderEffect(
         instance,
         initialVNode,
@@ -1377,7 +1381,7 @@ function baseCreateRenderer(
           if (__DEV__) {
             startMeasure(instance, `render`)
           }
-          //cd： 渲染renderComponentRoot
+          //TODO cd： 渲染renderComponentRoot，父组件（也就是jsx组件返回的html结构）
           const subTree = (instance.subTree = renderComponentRoot(instance))
           if (__DEV__) {
             endMeasure(instance, `render`)
@@ -1385,8 +1389,10 @@ function baseCreateRenderer(
           if (__DEV__) {
             startMeasure(instance, `patch`)
           }
+          //TODO cd： 执行patch函数，把子树传进去
           patch(
             null,
+            // TODO cd： 传入子树，后走mountElmenet函数，将虚拟dom转成真实dom createELement
             subTree,
             container,
             anchor,
@@ -1401,6 +1407,7 @@ function baseCreateRenderer(
         }
         // mounted hook
         if (m) {
+          //TODO cd: 这里就是放到队列更新了
           queuePostRenderEffect(m, parentSuspense)
         }
         // onVnodeMounted
@@ -1580,6 +1587,7 @@ function baseCreateRenderer(
     const effect = (instance.effect = new ReactiveEffect(
       componentUpdateFn,
       NOOP,
+      // TODO cd：响应式数据把update放队列里面
       () => queueJob(update),
       instance.scope, // track it in component's effect scope
     ))
@@ -1603,7 +1611,7 @@ function baseCreateRenderer(
         : void 0
       update.ownerInstance = instance
     }
-
+    // TODO cd: 执行update函数，触发组件的渲染
     update()
   }
 
@@ -2405,6 +2413,7 @@ function baseCreateRenderer(
   return {
     render,
     hydrate,
+    // cd：这个render函数就是上面传入的render函数，createAppAPI(render, hydrate)就是返回一个createApp函数
     createApp: createAppAPI(render, hydrate),
   }
 }
